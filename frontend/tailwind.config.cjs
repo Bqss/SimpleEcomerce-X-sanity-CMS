@@ -10,6 +10,15 @@ module.exports = {
             "banner-top" : "#DCDCDC",
             "product" : "#EBEBEB",
             "banner-bottom" : "#F02D34"
+        },
+        keyframes : {
+            "slide" : {
+                "0%": { transform : "translateX(0)"},
+                "100%" :  { transform : "translateX(-80%)"}
+            }
+        },
+        animation : {
+            "slide" : "slide 10s linear infinite"
         }
     },
   },

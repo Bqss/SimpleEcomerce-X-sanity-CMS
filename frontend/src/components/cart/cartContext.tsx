@@ -1,24 +1,24 @@
 import { useState, createContext } from "react";
 import { cartItem, Product } from "../../types/typing";
 
-
-interface AppContext{
-  cartOpen: boolean,
-  cartItem: cartItem[],
-  toggleCartOpen: () => void,
-  closeCartOpen : () => void,
-  addToCart: ({product, qty}:{product: Product, qty: number}) => void,
-  removeFromCart: ({id}:{id:string}) => void,
-
+interface AppContext {
+  cartOpen: boolean;
+  cartItem: cartItem[];
+  toggleCartOpen: () => void;
+  closeCartOpen: () => void;
+  addToCart: ({ product, qty }: { product: Product; qty: number }) => void;
+  removeFromCart: (id: string) => void;
+  toggleCartItemQty : (id: string, type: "inc"|"dec") => void
 }
 
 export const CartContext = createContext<AppContext>({
-  addToCart : () => {},
-  closeCartOpen : () => {},
-  removeFromCart : () => {},
+  addToCart: () => {},
+  closeCartOpen: () => {},
+  removeFromCart: () => {},
   toggleCartOpen: () => {},
-  cartItem : [],
-  cartOpen : false
+  toggleCartItemQty : () => {},
+  cartItem: [],
+  cartOpen: false,
 });
 
 const AppState = ({ children }: { children: React.ReactNode }) => {
@@ -57,7 +57,33 @@ const AppState = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const removeFromCart = ({ id }: { id: string }) => {
+  const toggleCartItemQty = (id: string, type: "inc" | "dec") => {
+    switch (type) {
+      case "inc":
+        setCartItem((prev) =>
+          [...prev].map((item) => {
+            if (item.id === id) {
+              return { id, product: item.product, qty: item.qty + 1 };
+            }
+            return { id: item.id, product: item.product, qty: item.qty };
+          })
+        );
+        break;
+      case "dec":
+        setCartItem((prev) =>
+          [...prev].map((item) => {
+            if (item.id === id) {
+              return { id, product: item.product, qty: item.qty - 1 };
+            }
+            return { id: item.id, product: item.product, qty: item.qty };
+          })
+        );
+
+        break;
+    }
+  };
+
+  const removeFromCart = (id: string ) => {
     setCartItem((prev) => prev.filter((item) => item.id !== id));
   };
 
@@ -70,6 +96,7 @@ const AppState = ({ children }: { children: React.ReactNode }) => {
         closeCartOpen,
         addToCart,
         removeFromCart,
+        toggleCartItemQty
       }}
     >
       {children}

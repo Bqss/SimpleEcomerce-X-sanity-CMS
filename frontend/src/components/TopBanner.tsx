@@ -7,7 +7,7 @@ interface Props {
 
 const TopBanner = ({data}:Props) => {
   return (
-    <div className='bg-banner-top relative min-h-[45vh] rounded-xl flex items-center p-8'>
+    <div className='bg-banner-top relative min-h-[45vh] rounded-xl flex items-center p-8 mt-20'>
       {data?.image && (
         <div className="absolute inset-0 flex items-center  justify-end lg:justify-center">
           <img  alt="product" className="w-[450px] aspect-square" src={urlFor(data?.image)} />

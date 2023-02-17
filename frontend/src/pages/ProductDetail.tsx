@@ -23,7 +23,7 @@ const ProductDetail = () => {
     () => getProductBySlug(slug),
     {
       onSuccess: (data) => {
-        window.scrollTo(0, 0,{behavior: "smooth"});
+        window.scrollTo({ top: 0, behavior: "smooth"});
         mutate(data?._id);
       },
       refetchOnWindowFocus: false
@@ -38,16 +38,15 @@ const ProductDetail = () => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row  gap-10 p-8 ">
+      <div className="flex flex-col lg:flex-row items-center  gap-10 p-4 sm:p-8 ">
         <div className="space-y-6 transition-colors duration-500">
-          <div className="bg-product hover:bg-banner-bottom rounded-xl">
+          <div className="bg-product w-[350px] aspect-square md:w-[400px] hover:bg-banner-bottom rounded-xl">
             <img
               src={urlFor(productDetail?.image[hoveredImage])}
               alt="df"
-              className="w-[350px] aspect-square rounded-xl md:w-[400px]"
             />
           </div>
-          <div className="flex gap-2  ">
+          <div className="flex gap-2 justify-center sm:justify-start ">
             {productDetail?.image.map((image, i) => (
               <div
                 className={
@@ -67,7 +66,7 @@ const ProductDetail = () => {
           </div>
         </div>
         <div className="flex flex-col gap-4 py-4">
-          <h2 className="text-4xl font-bold capitalize">
+          <h2 className="text-3xl sm:text-4xl font-bold capitalize">
             {productDetail?.name}
           </h2>
           <div className="flex gap-3">
@@ -96,24 +95,24 @@ const ProductDetail = () => {
             </div>
           </div>
           <div className="flex gap-4 mt-6 ">
-            <button className="inline-flex gap-2 text-orange-600 items-center bg-transparent border border-orange-600 px-10 py-2 rounded-md" onClick={() => {
+            <button className="inline-flex gap-2 text-orange-600 items-center bg-transparent border border-orange-600 px-5  sm:px-10 py-2 rounded-md" onClick={() => {
               handleAddToChart(productDetail,  count),
-              setCount(0)
+              setCount(1)
             }}>
               <AiOutlineShoppingCart />
-              <span>Add To Chart</span>
+              <span className="text-sm">Add To Chart</span>
             </button>
-            <button className="bg-orange-600 text-white px-10 py-2 rounded-md">
-              Buy Now
+            <button className="bg-orange-600 text-white px-5  sm:px-10 py-2 rounded-md">
+              <span className="tex-sm">Buy Now</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col items-center py-20">
+      <div className="flex flex-col items-center py-10 md:py-20">
         <h3 className="text-2xl font-bold text-gray-700">You may also like</h3>
-        <div className="mt-20 overflow-x-hidden max-w-full h-[400px] ">
-          <div className="ml-5 flex gap-4">
+        <div className="mt-20 overflow-x-hidden max-w-full py-5 sm:py-10 h-[350px] md:h-[400px] ">
+          <div className="ml-5 flex gap-4 animate-slide hover:pause">
             {relevantProduct?.map((product,i) => <Product data={product} key={i}/>)}
           </div>
         </div>
